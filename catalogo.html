@@ -19,7 +19,7 @@
     }
     main{flex:1 0 auto}
 
-    /* Header fijo igual que Inicio/Cotización */
+    /* Header fijo */
     .header{
       position: sticky;
       top: 0;
@@ -30,17 +30,47 @@
     }
     .navigation{
       display:flex;align-items:center;justify-content:space-between;
-      padding:10px 18px;max-width:1120px;margin:0 auto
+      padding:10px 18px;max-width:1120px;margin:0 auto;gap:12px;
     }
-    .navigation .header-menu{display:flex;gap:18px;list-style:none;margin:0;padding:0}
-    .navigation a{color:#fff;text-decoration:none;font-weight:600}
-    .logo img{height:58px; display: block;}
-    html{ scroll-padding-top:80px; }
-    section[id]{ scroll-margin-top:80px; }
+    .logo img{height:58px; display:block}
+
+    /* Menú desktop */
+    .header-menu{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    .header-menu a{color:#fff;text-decoration:none;font-weight:600;padding:10px 12px;border-radius:10px}
+    .header-menu a:hover{background:rgba(255,255,255,.08)}
+
+    /* Burger (móvil) */
+    .burger{
+      display:none;width:42px;height:42px;border-radius:10px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+      align-items:center;justify-content:center;cursor:pointer;
+    }
+    .burger span,.burger span::before,.burger span::after{
+      content:"";display:block;width:20px;height:2px;background:#fff;border-radius:2px;position:relative
+    }
+    .burger span::before{position:absolute;top:-6px}
+    .burger span::after {position:absolute;top: 6px}
+
+    @media (max-width:960px){
+      .logo img{height:48px}
+      .burger{display:flex}
+      .navigation{padding:8px 14px}
+      .navigation nav{margin-left:auto}
+      .header-menu{
+        position:absolute;top:100%;left:0;right:0;
+        display:none;flex-direction:column;gap:0;
+        background:#333;border-bottom:1px solid rgba(255,255,255,.12);padding:6px
+      }
+      .header-menu.is-open{display:flex}
+      .header-menu li a{display:block;padding:12px 14px}
+    }
+
+    html{ scroll-padding-top:80px }
+    section[id]{ scroll-margin-top:80px }
 
     /* Hero */
     .hero-mini{background:var(--brand-yellow);padding:48px 16px;text-align:center}
-    .hero-mini h1{margin:0 0 6px;font-size:40px}
+    .hero-mini h1{margin:0 0 6px;font-size:clamp(26px,5.6vw,40px)}
     .muted{color:var(--muted);font-size:14px}
 
     /* Layout */
@@ -48,42 +78,90 @@
     .section{padding:36px 0}
 
     /* Filtros */
-    .filters{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--stroke);
-      border-radius:14px;padding:12px;margin-bottom:18px}
+    .filters{
+      display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--stroke);
+      border-radius:14px;padding:12px;margin-bottom:18px
+    }
     .filters .group{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .filters label{font-size:13px;color:#555}
-    .filters select,.filters input[type="search"]{border:1px solid var(--stroke);border-radius:10px;padding:10px 12px;font-size:14px}
+    .filters select,.filters input[type="search"]{
+      border:1px solid var(--stroke);border-radius:10px;padding:10px 12px;font-size:14px
+    }
     .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{background:var(--chip);border:1px solid var(--stroke);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer}
+    .chip{
+      background:var(--chip);border:1px solid var(--stroke);padding:8px 12px;border-radius:999px;
+      font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap
+    }
     .chip.is-active{background:#111;color:#fff;border-color:#111}
     .btn-reset{margin-left:auto;background:#fff;border:1px solid var(--stroke);border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
     .btn-reset:hover{background:#f7f7f7}
 
+    /* Ajustes responsive filtros */
+    @media (max-width:960px){
+      .filters{gap:10px}
+      .filters .group{width:100%}
+      .filters select{flex:1 1 260px;min-width:220px}
+      .filters input[type="search"]{flex:1 1 260px;min-width:220px}
+      .chips{
+        width:100%;
+        overflow:auto;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:thin;
+        padding-bottom:4px
+      }
+      .chips::-webkit-scrollbar{height:6px}
+      .chips::-webkit-scrollbar-thumb{background:#ddd;border-radius:999px}
+      .btn-reset{width:100%}
+    }
+
     /* Secciones por categoría */
     .cat-section{margin:26px 0}
-    .cat-header{display:flex;align-items:flex-end;gap:10px;margin:0 0 12px}
+    .cat-header{display:flex;align-items:flex-end;gap:10px;margin:0 0 12px;flex-wrap:wrap}
     .cat-title{font-size:22px;margin:0}
     .cat-count{font-size:13px;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+
+    /* Grid de cards */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:18px
+    }
+    @media (max-width:900px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+    }
+    @media (max-width:560px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+    }
+    @media (max-width:380px){
+      .grid{grid-template-columns:1fr}
+    }
 
     /* Cards */
-    .card{border:1px solid var(--stroke);border-radius:12px;overflow:hidden;background:var(--card);display:flex;flex-direction:column;
-      transition:transform .18s ease, box-shadow .18s ease;}
+    .card{
+      border:1px solid var(--stroke);border-radius:12px;overflow:hidden;background:var(--card);
+      display:flex;flex-direction:column;transition:transform .18s ease, box-shadow .18s ease
+    }
     .card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
-    .card img{width:100%;height:190px;object-fit:cover}
+    .card img{width:100%;aspect-ratio:16/10;object-fit:cover}
     .card .body{padding:14px}
     .card h3{font-size:16px;margin:0 0 6px}
     .card .meta{font-size:12px;color:var(--muted)}
     .actions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
-    .pill{display:inline-block;border-radius:999px;padding:8px 14px;text-decoration:none;font-weight:700;border:2px solid #111;color:#111}
+    .pill{
+      display:inline-block;border-radius:999px;padding:8px 14px;text-decoration:none;font-weight:700;border:2px solid #111;color:#111
+    }
     .pill.wa{border-color:var(--cta);color:var(--cta)}
     .pill:hover{opacity:.9}
+    @media (max-width:560px){
+      .card h3{font-size:15px}
+      .pill{width:100%;text-align:center}
+    }
 
     /* Footer */
     .footer{background:var(--dark);color:#fff}
     .footer .container{padding:40px 16px}
     .footer .row{display:grid;grid-template-columns:1fr 1fr 2fr;gap:24px}
-    .footer-item img{height:90px;}
+    .footer-item img{height:90px;display:block;margin-inline:auto}
     .footer h5{margin:0 0 10px}
     .footer ul{list-style:none;padding:0;margin:0}
     .footer a{color:#fff;text-decoration:none}
@@ -91,15 +169,43 @@
     .copyright{border-top:1px solid rgba(255,255,255,.12);padding:16px 0;text-align:center}
     @media (max-width:960px){ .footer .row{grid-template-columns:1fr} }
 
-   /* ===== FAB WhatsApp ===== */
+    /* FAB WhatsApp */
     .fab-wa{
-      position:fixed; right:18px; bottom:18px; z-index:60;
+      position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:60;
       background:#25D366; color:#0d3b2e; border:none; border-radius:999px;
       padding:12px 16px; font-weight:800; text-decoration:none;
       box-shadow:0 12px 30px rgba(37,211,102,.35);
     }
     .fab-wa:hover{filter:brightness(1.05)}
     .fab-wa svg{vertical-align:-3px}
+
+    /* Circular y pequeño SOLO en responsive */
+@media (max-width: 960px){
+  .fab-wa{
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0;               /* oculta texto directo si quedara */
+  }
+  .fab-wa .wa-text{ display:none }  /* oculta el label en móvil */
+  .fab-wa svg{ width:22px; height:22px; vertical-align:0 }
+}
+
+/* Evitar que baje al tocar el footer */
+.fab-wa{
+  position: fixed;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 60;
+  transition: bottom .18s ease;           /* animación suave */
+}
+.fab-wa.avoid-footer{
+  bottom: calc(18px * 27 + env(safe-area-inset-bottom)); /* 144px aprox */
+}
+
   </style>
 </head>
 <body>
@@ -107,13 +213,16 @@
   <header class="header">
     <div class="navigation">
       <a href="index.html" class="logo" aria-label="Master Tornillos"><img src="img/Logo3.png" alt="Master Tornillos" /></a>
+
       <nav>
-        <ul class="header-menu">
+        <ul class="header-menu" id="headerMenu">
           <li><a href="index.html">Inicio</a></li>
           <li><a href="catalogo.html" aria-current="page">Productos</a></li>
           <li><a href="contacto.html">Contacto</a></li>
         </ul>
       </nav>
+
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
     </div>
   </header>
 
@@ -617,12 +726,24 @@
   </footer>
 
   <!-- WhatsApp flotante -->
-  <a class="fab-wa" href="https://wa.me/50241032992?text=Hola%20Master%20Tornillos,%20quisiera%20cotizaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
-    <svg width="18" height="18" viewBox="0 0 32 32" fill="#0d3b2e" aria-hidden="true"><path d="M19.11 17.3c-.27-.13-1.58-.78-1.82-.86-.24-.09-.42-.13-.6.13-.18.27-.69.86-.84 1.04-.15.18-.31.2-.58.07-.27-.13-1.15-.42-2.2-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.41.11-.54.11-.11.27-.29.4-.44.13-.15.18-.25.27-.42.09-.18.04-.32-.02-.45-.07-.13-.6-1.45-.82-1.99-.22-.53-.45-.46-.6-.46-.16 0-.34-.02-.52-.02s-.48.07-.73.34c-.25.27-.96.94-.96 2.29 0 1.35.98 2.66 1.12 2.85.13.18 1.93 2.95 4.68 4.02.65.28 1.16.45 1.56.58.65.2 1.25.17 1.72.1.53-.08 1.58-.65 1.8-1.28.22-.63.22-1.18.16-1.28-.07-.11-.25-.18-.52-.31z"/><path d="M26.7 5.3C23.9 2.5 20.1 1 16 1 7.7 1 1 7.7 1 16c0 2.6.7 5.1 2 7.3L1 31l7.9-2.1c2.1 1.1 4.5 1.7 7.1 1.7 8.3 0 15-6.7 15-15 0-4.1-1.5-7.9-4.3-10.7zm-10.7 24c-2.4 0-4.7-.6-6.7-1.7l-.5-.3-4.7 1.2 1.3-4.6-.3-.5C3.6 21.3 3 18.7 3 16 3 8.8 8.8 3 16 3s13 5.8 13 13-5.8 13-13 13z"/></svg>
-    &nbsp; WhatsApp
-  </a>
+ <a class="fab-wa" id="waFab" href="https://wa.me/50241032992?text=Hola%20Master%20Tornillos,%20quisiera%20cotizaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg width="18" height="18" viewBox="0 0 32 32" fill="#0d3b2e" aria-hidden="true"><path d="M19.11 17.3c-.27-.13-1.58-.78-1.82-.86-.24-.09-.42-.13-.6.13-.18.27-.69.86-.84 1.04-.15.18-.31.2-.58.07-.27-.13-1.15-.42-2.2-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.41.11-.54.11-.11.27-.29.4-.44.13-.15.18-.25.27-.42.09-.18.04-.32-.02-.45-.07-.13-.6-1.45-.82-1.99-.22-.53-.45-.46-.6-.46-.16 0-.34-.02-.52-.02s-.48.07-.73.34c-.25.27-.96.94-.96 2.29 0 1.35.98 2.66 1.12 2.85.13.18 1.93 2.95 4.68 4.02.65.28 1.16.45 1.56.58.65.2 1.25.17 1.72.1.53-.08 1.58-.65 1.8-1.28.22-.63.22-1.18.16-1.28-.07-.11-.25-.18-.52-.31z"/><path d="M26.7 5.3C23.9 2.5 20.1 1 16 1 7.7 1 1 7.7 1 16c0 2.6.7 5.1 2 7.3L1 31l7.9-2.1c2.1 1.1 4.5 1.7 7.1 1.7 8.3 0 15-6.7 15-15 0-4.1-1.5-7.9-4.3-10.7zm-10.7 24c-2.4 0-4.7-.6-6.7-1.7l-.5-.3-4.7 1.2 1.3-4.6-.3-.5C3.6 21.3 3 18.7 3 16 3 8.8 8.8 3 16 3s13 5.8 13 13-5.8 13-13 13z"/></svg>
+  <span class="wa-text">&nbsp; WhatsApp</span>
+</a>
 
   <script>
+    // Burger para móvil
+    (function(){
+      var burger = document.getElementById('burger');
+      var menu = document.getElementById('headerMenu');
+      if(burger && menu){
+        burger.addEventListener('click', function(){
+          var open = menu.classList.toggle('is-open');
+          burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+    })();
+
     (function(){
       const sectionsWrap = document.getElementById('sections');
       const sectionEls = Array.from(sectionsWrap.querySelectorAll('.cat-section'));
@@ -653,7 +774,7 @@
       function updateCountsAndVisibility(){
         sectionEls.forEach(sec=>{
           const grid = sec.querySelector('.grid');
-          const allCards = Array.from(grid.children);
+          const allCards = Array.from(grid.children).filter(el => el.classList.contains('card'));
           const visible = allCards.filter(c => c.style.display !== 'none');
           const countEl = sec.querySelector('[data-count]');
           if(countEl) countEl.textContent = `${visible.length} ítem(s)`;
@@ -664,7 +785,7 @@
       function sortInsideSections(){
         sectionEls.forEach(sec=>{
           const grid = sec.querySelector('.grid');
-          const list = Array.from(grid.children);
+          const list = Array.from(grid.children).filter(el => el.classList.contains('card'));
           list.sort((a,b)=>{
             const na = a.querySelector('h3')?.textContent?.trim()?.toLowerCase() || '';
             const nb = b.querySelector('h3')?.textContent?.trim()?.toLowerCase() || '';
@@ -703,7 +824,7 @@
         card.querySelectorAll('a.pill.wa').forEach(a => { a.href = url; });
       });
 
-      // FAB con mensaje genérico (mismo patrón que Inicio/Cotización)
+      // FAB genérico
       const fab = document.getElementById('waFab');
       if (fab) fab.href = `https://wa.me/${PHONE}?text=${encodeURIComponent('Hola Master Tornillos, quisiera una cotización')}`;
 
@@ -712,5 +833,26 @@
       render();
     })();
   </script>
+  <script>
+  // Eleva el FAB cuando el footer entra en viewport (no se pega al borde inferior)
+  (function(){
+    var fab = document.getElementById('waFab');
+    var footer = document.querySelector('footer.footer');
+    if(!fab || !footer || !('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          fab.classList.add('avoid-footer');
+        }else{
+          fab.classList.remove('avoid-footer');
+        }
+      });
+    }, { root: null, threshold: 0.01 });
+
+    io.observe(footer);
+  })();
+</script>
+
 </body>
 </html>
