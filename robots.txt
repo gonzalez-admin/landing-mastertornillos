@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://allevofoods.com/sitemap.xml
+Sitemap: https://mastertornillos.com/sitemap.xml

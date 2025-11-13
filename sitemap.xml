@@ -3,7 +3,7 @@
 
   <!-- Página de inicio -->
   <url>
-    <loc>https://allevofoods.com/</loc>
+    <loc>https://mastertornillos.com/</loc>
     <lastmod>2025-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,7 +11,7 @@
 
   <!-- Página Productos -->
   <url>
-    <loc>https://allevofoods.com/productos.html</loc>
+    <loc>https://mastertornillos.com/catalogo.html</loc>
     <lastmod>2025-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -19,7 +19,7 @@
 
   <!-- Página Contacto -->
   <url>
-    <loc>https://allevofoods.com/contacto.html</loc>
+    <loc>https://mastertornillos.com/contacto.html</loc>
     <lastmod>2025-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
